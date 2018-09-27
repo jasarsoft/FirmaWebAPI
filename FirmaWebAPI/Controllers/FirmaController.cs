@@ -8,6 +8,13 @@ namespace FirmaWebAPI.Controllers
 {
     public class FirmaController : Controller
     {
+        public ActionResult Stepen(int a, int b)
+        {
+            double r = Math.Pow(a, b);
+            ViewData["rKey"] = r;
+            return View("Rezultat");
+        }
+
         public string Kvadriraj(int a)
         {
             return (a * a).ToString();

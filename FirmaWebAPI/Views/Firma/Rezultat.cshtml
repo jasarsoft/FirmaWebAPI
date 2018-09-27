@@ -7,11 +7,11 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="http://localhost:4050/firma/stepen">
-        a <input type="text" name="a"/><br>
-        b <input type="text" name="b"/><br>
+    @{ 
+        double r = (double)ViewData["rKey"];
+    }
 
-        <input type="submit" value="Izracunaj"/>
-    </form>
+    <h3>Rezultat obracuna</h3>
+    <label style="color: red">@r</label>
 </body>
 </html>
