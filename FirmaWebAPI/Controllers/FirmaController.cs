@@ -12,5 +12,11 @@ namespace FirmaWebAPI.Controllers
         {
             return (a * a).ToString();
         }
+
+        //http://localhost:4050/firma/stepenuj?a=2&b=3
+        public string Stepenuj(int a, int b)
+        {
+            return Math.Pow(a, b).ToString();
+        }
     }
 }
