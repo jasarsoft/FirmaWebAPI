@@ -18,5 +18,10 @@ namespace FirmaWebAPI.Controllers
         {
             return Math.Pow(a, b).ToString();
         }
+
+        public ActionResult Proba()
+        {
+            return View("Proba");
+        }
     }
 }
