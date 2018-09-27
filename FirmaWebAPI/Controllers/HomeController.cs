@@ -21,6 +21,12 @@ namespace FirmaWebAPI.Controllers
             return View("index");
         }
 
+        public ActionResult Preusmjeri()
+        {
+            ViewBag.Title = "Redirekcija";
+            return RedirectToAction("index");
+        }
+
         public string Proba()
         {
             return "<h2>hello</h2>";
