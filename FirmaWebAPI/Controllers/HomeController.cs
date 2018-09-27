@@ -15,6 +15,12 @@ namespace FirmaWebAPI.Controllers
             return View();
         }
 
+        public ActionResult Prikazi()
+        {
+            ViewBag.Title = "Home Prikazi";
+            return View("index");
+        }
+
         public string Proba()
         {
             return "<h2>hello</h2>";
