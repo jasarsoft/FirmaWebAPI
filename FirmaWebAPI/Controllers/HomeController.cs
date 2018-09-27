@@ -14,5 +14,10 @@ namespace FirmaWebAPI.Controllers
 
             return View();
         }
+
+        public string Proba()
+        {
+            return "<h2>hello</h2>";
+        }
     }
 }
