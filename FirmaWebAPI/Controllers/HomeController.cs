@@ -27,6 +27,11 @@ namespace FirmaWebAPI.Controllers
             return RedirectToAction("index");
         }
 
+        public ActionResult PreusmjeriDirektno()
+        {
+            return Redirect("http://fit.ba");
+        }
+
         public string Proba()
         {
             return "<h2>hello</h2>";
