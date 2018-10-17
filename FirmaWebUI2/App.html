@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+	
+    <title>Hello, world!</title>
+  </head>
+  
+  
+
+<body class="bg-light">
+
+	<div class="container">
+
+	<div id="alert-div" >
+		
+	</div>
+
+	
+
+
+		<br/>
+
+		<hr/>
+		<h4>Tabela za prikaz zapisa o firmima</h4>
+		<button onclick="BtnPrikazi()" class="btn btn-primary">Prikaži firme</button>
+	
+
+		<table id="tabela" class="table table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Naziv</th>
+					<th>JIB</th>
+					<th>PDV Broj</th>
+					<th>Adresa</th>
+					<th>Opstina</th>
+					<th>Izdato Racuna</th>
+					<th>Suma bez PDV</th>
+					<th>Suma sa PDV</th>
+					<th>Akcija</th>            
+				</tr>
+			</thead>
+			 <tbody id="tabelabody">
+			 </tbody>
+		</table>
+
+		<hr/>
+
+		<button onclick="BtnDodaj()" class="btn btn-primary">Nova firma</button>
+		<h4>Forma za dodavanje i modifikaciju zapisa o firmima</h4>
+		<form id="UpdateForma" >
+			
+			<div class="form-group">
+				<label>ID firme</label>
+				<input type="text" class="form-control" id="ID" name="ID" readonly>   
+			</div>
+		
+			<div class="form-group">
+				<label>Naziv firme</label>
+				<input type="text" class="form-control" id="Naziv" name="Naziv"  placeholder="Unesite naziv firme" value="doo A">   
+			</div>
+		  
+			<div class="form-group">
+				<label>JIB</label>
+				<input type="text" class="form-control" id="JIB" name="JIB"  placeholder="Jedinstveni identifikacioni broj firme" value="Ul A">
+			</div>
+			
+			<div class="form-group">
+				<label>PDV broj</label>
+				<input type="text" class="form-control" id="PDV" name="PDV"  placeholder="PDV broj" value="111 A">
+			</div>
+			
+			<div class="form-group">
+				<label>Adresa</label>
+				<input type="text" class="form-control" id="Adresa"  name="Adresa" placeholder="Adresa sjedišta firme" value="Ul A">
+			</div>
+			
+			<div class="form-group">
+				<label>Opstina ID</label>
+				<select  class="form-control" id="OpstinaID"  name="OpstinaID" >
+					<option>(odaberite opstinu)</option>
+				</select>
+			</div>		  
+		
+		</form>
+			<button class="btn btn-primary" onclick="BtnSnimi()">Snimi</button>
+	</div>
+
+    <!-- jQuery first, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"  crossorigin="anonymous"></script>
+	
+	
+    <!-- Optional JavaScript -->
+	<script src="mojSkript.js"></script>
+	
+</body>
+</html>
