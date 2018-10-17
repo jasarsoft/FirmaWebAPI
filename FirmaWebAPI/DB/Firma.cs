@@ -24,7 +24,7 @@ namespace FirmaWebAPI.DB
         public string Naziv { get; set; }
         public string Adresa { get; set; }
         public string JIB { get; set; }
-        public Nullable<int> OpstinaID { get; set; }
+        public int OpstinaID { get; set; }
         public string PDVBroj { get; set; }
     
         public virtual Opstina Opstina { get; set; }
