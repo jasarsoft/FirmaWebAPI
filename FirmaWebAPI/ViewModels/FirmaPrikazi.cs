@@ -14,5 +14,9 @@ namespace FirmaWebAPI.ViewModels
         public int BrojRacuna;
         public decimal? IznosBezPDV;
         public decimal? IznosSaPDV;
+
+        public string JIB;
+        public string PDVBroj;
+        public string Opstina;
     }
 }
