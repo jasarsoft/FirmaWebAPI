@@ -45,9 +45,7 @@ namespace FirmaWebAPI.Controllers
 
             List<Firma> firme = db.Firma.ToList();
 
-            ViewData["firmeKey"] = firme;
-
-            return View("FirmeView");
+            return Json(firme, JsonRequestBehavior.AllowGet);
         }
     }
 }
