@@ -38,5 +38,16 @@ namespace FirmaWebAPI.Controllers
 
             return db.Firma.Where(s => s.Naziv.StartsWith("d")).Count();
         }
+
+        public ActionResult Prikazi()
+        {
+            firma2Entities db = new firma2Entities();
+
+            List<Firma> firme = db.Firma.ToList();
+
+            ViewData["firmeKey"] = firme;
+
+            return View("FirmeView");
+        }
     }
 }
