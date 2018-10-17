@@ -1,4 +1,5 @@
 ﻿using FirmaWebAPI.DB;
+using FirmaWebAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,8 +44,15 @@ namespace FirmaWebAPI.Controllers
         {
             firma2Entities db = new firma2Entities();
 
-            List<Firma> firme = db.Firma.ToList();
-
+            List<FirmaPrikazi> firme = db.Firma.Select(s => new FirmaPrikazi {
+                ID = s.ID,
+                Naziv = s.Naziv,
+                Adresa = s.Adresa,
+                BrojRacuna = s.Racun.Count,
+                IznosBezPDV = s.Racun.Sum(r=>(decimal?)r.Iznos),
+                IznosSaPDV = s.Racun.Sum(r=> (decimal?)(r.Iznos * (decimal)1.17))
+            }).ToList();
+            
             return Json(firme, JsonRequestBehavior.AllowGet);
         }
     }

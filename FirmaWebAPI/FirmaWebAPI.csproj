@@ -213,6 +213,9 @@
     <Compile Include="DB\procFirme_Result.cs">
       <DependentUpon>FirmaModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DB\Racun.cs">
+      <DependentUpon>FirmaModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DB\ViewFirme1.cs">
       <DependentUpon>FirmaModel.tt</DependentUpon>
     </Compile>

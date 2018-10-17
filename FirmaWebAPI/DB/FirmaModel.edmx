@@ -23,6 +23,15 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Naziv" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="Racun">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Datum" Type="date" Nullable="false" />
+          <Property Name="Iznos" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="FirmaID" Type="int" Nullable="false" />
+        </EntityType>
         <!--Errors Found During Generation:
 warning 6002: The table/view 'firma2.dbo.ViewFirme1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ViewFirme1">
@@ -48,10 +57,23 @@ warning 6002: The table/view 'firma2.dbo.ViewFirme1' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Racun_Firma">
+          <End Role="Firma" Type="Self.Firma" Multiplicity="1" />
+          <End Role="Racun" Type="Self.Racun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firma">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Racun">
+              <PropertyRef Name="FirmaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="procFirme" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="firma2ModelStoreContainer">
           <EntitySet Name="Firma" EntityType="Self.Firma" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Opstina" EntityType="Self.Opstina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Racun" EntityType="Self.Racun" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ViewFirme1" EntityType="Self.ViewFirme1" store:Type="Views" store:Schema="dbo">
             <DefiningQuery>SELECT 
     [ViewFirme1].[ID] AS [ID], 
@@ -65,6 +87,10 @@ warning 6002: The table/view 'firma2.dbo.ViewFirme1' does not have a primary key
           <AssociationSet Name="FK_Firma_Opstina" Association="Self.FK_Firma_Opstina">
             <End Role="Opstina" EntitySet="Opstina" />
             <End Role="Firma" EntitySet="Firma" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Racun_Firma" Association="Self.FK_Racun_Firma">
+            <End Role="Firma" EntitySet="Firma" />
+            <End Role="Racun" EntitySet="Racun" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -82,6 +108,7 @@ warning 6002: The table/view 'firma2.dbo.ViewFirme1' does not have a primary key
           <Property Name="OpstinaID" Type="Int32" />
           <NavigationProperty Name="Opstina" Relationship="Self.FK_Firma_Opstina" FromRole="Firma" ToRole="Opstina" />
           <Property Name="PDVBroj" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Racun" Relationship="firma2Model.FK_Racun_Firma" FromRole="Firma" ToRole="Racun" />
         </EntityType>
         <EntityType Name="Opstina">
           <Key>
@@ -112,6 +139,11 @@ warning 6002: The table/view 'firma2.dbo.ViewFirme1' does not have a primary key
           </AssociationSet>
           <EntitySet Name="ViewFirme1" EntityType="firma2Model.ViewFirme1" />
           <FunctionImport Name="procFirme" ReturnType="Collection(firma2Model.procFirme_Result)" />
+          <EntitySet Name="Racun" EntityType="firma2Model.Racun" />
+          <AssociationSet Name="FK_Racun_Firma" Association="firma2Model.FK_Racun_Firma">
+            <End Role="Firma" EntitySet="Firma" />
+            <End Role="Racun" EntitySet="Racun" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="ViewFirme1">
           <Key>
@@ -132,6 +164,28 @@ warning 6002: The table/view 'firma2.dbo.ViewFirme1' does not have a primary key
           <Property Type="String" Name="PDVBroj" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Opstina" Nullable="true" />
         </ComplexType>
+        <EntityType Name="Racun">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Datum" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Iznos" Type="Decimal" Nullable="false" Precision="18" Scale="0" />
+          <Property Name="FirmaID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Firma" Relationship="firma2Model.FK_Racun_Firma" FromRole="Racun" ToRole="Firma" />
+        </EntityType>
+        <Association Name="FK_Racun_Firma">
+          <End Type="firma2Model.Firma" Role="Firma" Multiplicity="1" />
+          <End Type="firma2Model.Racun" Role="Racun" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Firma">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Racun">
+              <PropertyRef Name="FirmaID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -182,6 +236,16 @@ warning 6002: The table/view 'firma2.dbo.ViewFirme1' does not have a primary key
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Racun">
+            <EntityTypeMapping TypeName="firma2Model.Racun">
+              <MappingFragment StoreEntitySet="Racun">
+                <ScalarProperty Name="FirmaID" ColumnName="FirmaID" />
+                <ScalarProperty Name="Iznos" ColumnName="Iznos" />
+                <ScalarProperty Name="Datum" ColumnName="Datum" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -30,6 +30,7 @@ namespace FirmaWebAPI.DB
         public virtual DbSet<Firma> Firma { get; set; }
         public virtual DbSet<Opstina> Opstina { get; set; }
         public virtual DbSet<ViewFirme1> ViewFirme1 { get; set; }
+        public virtual DbSet<Racun> Racun { get; set; }
     
         public virtual ObjectResult<procFirme_Result> procFirme()
         {

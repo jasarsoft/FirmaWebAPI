@@ -14,6 +14,12 @@ namespace FirmaWebAPI.DB
     
     public partial class Firma
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Firma()
+        {
+            this.Racun = new HashSet<Racun>();
+        }
+    
         public int ID { get; set; }
         public string Naziv { get; set; }
         public string Adresa { get; set; }
@@ -22,5 +28,7 @@ namespace FirmaWebAPI.DB
         public string PDVBroj { get; set; }
     
         public virtual Opstina Opstina { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Racun> Racun { get; set; }
     }
 }
