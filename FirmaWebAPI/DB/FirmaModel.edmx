@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="firma2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="firma2Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Firma">
           <Key>
             <PropertyRef Name="ID" />
@@ -14,6 +14,7 @@
           <Property Name="Adresa" Type="nvarchar(max)" />
           <Property Name="JIB" Type="nvarchar(max)" />
           <Property Name="OpstinaID" Type="int" />
+          <Property Name="PDVBroj" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Opstina">
           <Key>
@@ -21,6 +22,19 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Naziv" Type="nvarchar(max)" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'firma2.dbo.ViewFirme1' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ViewFirme1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Naziv" Type="nvarchar(max)" />
+          <Property Name="Adresa" Type="nvarchar(max)" />
+          <Property Name="JIB" Type="nvarchar(max)" />
+          <Property Name="PDVBroj" Type="nvarchar" MaxLength="50" />
+          <Property Name="Opstina" Type="nvarchar(max)" />
         </EntityType>
         <Association Name="FK_Firma_Opstina">
           <End Role="Opstina" Type="Self.Opstina" Multiplicity="0..1" />
@@ -34,16 +48,26 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="procFirme" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="firma2ModelStoreContainer">
           <EntitySet Name="Firma" EntityType="Self.Firma" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Opstina" EntityType="Self.Opstina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ViewFirme1" EntityType="Self.ViewFirme1" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ViewFirme1].[ID] AS [ID], 
+    [ViewFirme1].[Naziv] AS [Naziv], 
+    [ViewFirme1].[Adresa] AS [Adresa], 
+    [ViewFirme1].[JIB] AS [JIB], 
+    [ViewFirme1].[PDVBroj] AS [PDVBroj], 
+    [ViewFirme1].[Opstina] AS [Opstina]
+    FROM [dbo].[ViewFirme1] AS [ViewFirme1]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Firma_Opstina" Association="Self.FK_Firma_Opstina">
             <End Role="Opstina" EntitySet="Opstina" />
             <End Role="Firma" EntitySet="Firma" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="firma2Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -57,6 +81,7 @@
           <Property Name="JIB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="OpstinaID" Type="Int32" />
           <NavigationProperty Name="Opstina" Relationship="Self.FK_Firma_Opstina" FromRole="Firma" ToRole="Opstina" />
+          <Property Name="PDVBroj" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Opstina">
           <Key>
@@ -85,7 +110,28 @@
             <End Role="Opstina" EntitySet="Opstina" />
             <End Role="Firma" EntitySet="Firma" />
           </AssociationSet>
+          <EntitySet Name="ViewFirme1" EntityType="firma2Model.ViewFirme1" />
+          <FunctionImport Name="procFirme" ReturnType="Collection(firma2Model.procFirme_Result)" />
         </EntityContainer>
+        <EntityType Name="ViewFirme1">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Naziv" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Adresa" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="JIB" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PDVBroj" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Opstina" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <ComplexType Name="procFirme_Result">
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Naziv" Nullable="true" />
+          <Property Type="String" Name="Adresa" Nullable="true" />
+          <Property Type="String" Name="JIB" Nullable="true" />
+          <Property Type="String" Name="PDVBroj" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Opstina" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -95,6 +141,7 @@
           <EntitySetMapping Name="Firma">
             <EntityTypeMapping TypeName="firma2Model.Firma">
               <MappingFragment StoreEntitySet="Firma">
+                <ScalarProperty Name="PDVBroj" ColumnName="PDVBroj" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Naziv" ColumnName="Naziv" />
                 <ScalarProperty Name="Adresa" ColumnName="Adresa" />
@@ -111,6 +158,30 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ViewFirme1">
+            <EntityTypeMapping TypeName="firma2Model.ViewFirme1">
+              <MappingFragment StoreEntitySet="ViewFirme1">
+                <ScalarProperty Name="Opstina" ColumnName="Opstina" />
+                <ScalarProperty Name="PDVBroj" ColumnName="PDVBroj" />
+                <ScalarProperty Name="JIB" ColumnName="JIB" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="procFirme" FunctionName="firma2Model.Store.procFirme">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="firma2Model.procFirme_Result">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Naziv" ColumnName="Naziv" />
+                <ScalarProperty Name="Adresa" ColumnName="Adresa" />
+                <ScalarProperty Name="JIB" ColumnName="JIB" />
+                <ScalarProperty Name="PDVBroj" ColumnName="PDVBroj" />
+                <ScalarProperty Name="Opstina" ColumnName="Opstina" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

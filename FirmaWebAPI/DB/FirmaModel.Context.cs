@@ -12,6 +12,8 @@ namespace FirmaWebAPI.DB
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class firma2Entities : DbContext
     {
@@ -27,5 +29,11 @@ namespace FirmaWebAPI.DB
     
         public virtual DbSet<Firma> Firma { get; set; }
         public virtual DbSet<Opstina> Opstina { get; set; }
+        public virtual DbSet<ViewFirme1> ViewFirme1 { get; set; }
+    
+        public virtual ObjectResult<procFirme_Result> procFirme()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<procFirme_Result>("procFirme");
+        }
     }
 }

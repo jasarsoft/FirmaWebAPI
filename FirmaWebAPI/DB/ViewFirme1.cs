@@ -12,15 +12,13 @@ namespace FirmaWebAPI.DB
     using System;
     using System.Collections.Generic;
     
-    public partial class Firma
+    public partial class ViewFirme1
     {
         public int ID { get; set; }
         public string Naziv { get; set; }
         public string Adresa { get; set; }
         public string JIB { get; set; }
-        public Nullable<int> OpstinaID { get; set; }
         public string PDVBroj { get; set; }
-    
-        public virtual Opstina Opstina { get; set; }
+        public string Opstina { get; set; }
     }
 }
