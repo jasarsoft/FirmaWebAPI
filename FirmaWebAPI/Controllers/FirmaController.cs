@@ -3,6 +3,7 @@ using FirmaWebAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -54,6 +55,17 @@ namespace FirmaWebAPI.Controllers
             }).ToList();
             
             return Json(firme, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Obrisi(int id)
+        {
+            firma2Entities db = new firma2Entities();
+            Firma f = db.Firma.Find(id);
+
+            db.Firma.Remove(f);
+            db.SaveChanges();
+
+            return new HttpStatusCodeResult(HttpStatusCode.OK);
         }
     }
 }
