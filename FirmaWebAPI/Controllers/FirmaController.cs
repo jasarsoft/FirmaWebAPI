@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FirmaWebAPI.DB;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -29,6 +30,13 @@ namespace FirmaWebAPI.Controllers
         public ActionResult Proba()
         {
             return View("Proba");
+        }
+
+        public int Broj()
+        {
+            firma2Entities db = new DB.firma2Entities();
+
+            return db.Firma.Where(s => s.Naziv.StartsWith("d")).Count();
         }
     }
 }
